@@ -13,7 +13,7 @@ boxes = cross(rows, cols)
 row_units = [cross(r, cols) for r in rows]
 column_units = [cross(rows, c) for c in cols]
 square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
-diagonal_units = [[r + c for r, c in zip(rows, cols)], [r + c for r, c in zip(rows, cols[::-1])]]
+diagonal_units = [['A1','B2','C3','D4','E5','F6','G7','H8','I9'],['A9','B8','C7','D6','E5','F4','G3','H2','I1']]
 unitlist = row_units + column_units + square_units + diagonal_units
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
 peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
@@ -41,19 +41,13 @@ def naked_twins(values):
     Returns:
         the values dictionary with the naked twins eliminated from peers.
     """
-    #Pick all the box which has 2 potential values , which has possibility to be twins
     potential_twins = [box for box in values.keys() if len(values[box]) == 2]
-
-    #Loop over all potential values
     for box in potential_twins:
         val = values[box]
-        #Loop all peer to see if there is match in values 
         for peer in peers[box]:
             if val == values[peer]:
-                #if yes, check out which unit that both peer & box are in
                 for unit in units[box]:
                     if peer in unit:
-                        #Remove the twins values from all other boxes within that unit
                         for digit in val:
                             for item in unit:
                                 if (item != box and item != peer):
@@ -141,8 +135,6 @@ def reduce_puzzle(values):
         values = eliminate(values)
         # Your code here: Use the Only Choice Strategy
         values = only_choice(values)
-        # Implement naked twins to further prune the decision tree
-        values = naked_twins(values)
         # Check how many boxes have a determined value, to compare
         solved_values_after = len([box for box in values.keys() if len(values[box]) == 1])
         # If no new values were added, stop the loop.

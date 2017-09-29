@@ -3,17 +3,11 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: 1) Basically same as normal sudoku also but to prune more branches
-   2) Identify peer that is twins of every box value
-   3) Given potential number of value = number of twins, that list of value can only be within that pair of twins
-   4) So for other box within same unit, we can elimiate the possibility of that list of value which narrows the branches and speed up the AI solving time
+A: First we identify the twins in every possible row/column/box (but not peers given the constraint of twins won't apply to all of peer of any box alone). Then remove all values(twins) from the unit's values
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: 1) Basically same as non-diagonal sudoku except extra constraint of diagonal unit need to be unique
-   2) We add diagonal list into the unitlist (consists of col/row/box)
-   3) While considering peers value for elimination, also consider the peers of diagonal value to further constraint the potential values of some boxes
-   4) Actually run-time should be faster than non-digonal unit given there are more constriant and fewers branches 
+A: Add diagonal list into the unitlist so that the possibility for values will be restricted also by the diagonal value
 
 ### Install
 
